@@ -136,10 +136,10 @@ spec:
           image: w3ll1n9t0n/crud_app:latest
           ports:
             - containerPort: 5000
-          command:
-            - sh
-            - -c
-            - "sleep 300 && python3 app.py"
+#          command:
+#            - sh
+#            - -c
+#            - "sleep 300 && python3 app.py"
           env:
             - name: DB_HOST
               value: db
