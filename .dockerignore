@@ -1,5 +1,4 @@
 .env
+database.sql
 docker-compose.yaml
 dockerfile
-README.md
-database.sql

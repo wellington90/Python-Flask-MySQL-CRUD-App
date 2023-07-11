@@ -13,14 +13,16 @@ services:
       - ./dbdata:/var/lib/mysql
       - ./database.sql:/docker-entrypoint-initdb.d/database.sql
     networks: 
-      net:
+      - net
 
   app:
-    build: .
+    image: app
     ports:
       - "5000:5000"
     networks: 
-      net:
+      - net
+    depends_on:
+      - db
 
 networks: 
   net:
