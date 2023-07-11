@@ -16,13 +16,14 @@ services:
       - net
 
   app:
-    image: app
+    image: w3ll1n9t0n/crud_app:latest
     ports:
       - "5000:5000"
     networks: 
       - net
     depends_on:
       - db
+    command: sh -c "sleep 300 && python3 app.py"  # Wait for 5 minutes (300 seconds) before starting the app
 
 networks: 
   net:
