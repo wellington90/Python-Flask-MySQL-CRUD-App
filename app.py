@@ -26,7 +26,7 @@ def Index():
             data = cur.fetchall()
             cur.close()
 
-            return render_template('index.html', students=data)
+            return render_template('index.html', students=data, maquina=os.uname().nodename)
     except Error as e:
         flash("Error connecting to database: {}".format(e))
         return redirect(url_for('error'))

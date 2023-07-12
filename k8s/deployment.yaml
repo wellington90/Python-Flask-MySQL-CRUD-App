@@ -114,6 +114,7 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
+  
 
 ---
 apiVersion: apps/v1
@@ -125,7 +126,7 @@ spec:
   selector:
     matchLabels:
       app: app
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -180,7 +181,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: app
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 5
   metrics:
     - type: Resource
@@ -190,3 +191,24 @@ spec:
           type: Utilization
           averageUtilization: 30
           
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: my-app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: example.com # Substitua pelo seu domínio ou endereço IP
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app
+            port:
+              number: 5000
