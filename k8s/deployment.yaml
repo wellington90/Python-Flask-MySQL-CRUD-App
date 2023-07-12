@@ -136,7 +136,12 @@ spec:
           image: w3ll1n9t0n/crud_app:latest
           ports:
             - containerPort: 5000
-#          command:
+          resources:
+            limits:
+              cpu: 500m 
+            requests:
+              cpu: 200m
+  #          command:
 #            - sh
 #            - -c
 #            - "sleep 300 && python3 app.py"
@@ -163,3 +168,25 @@ type: Opaque
 data:
   DB_PASSWORD: MTIzNA==  # Base64-encoded value of the password
   DB_USERNAME: YXBw  # Base64-encoded value of the username
+
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: app-hpa
+  namespace: my-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 30
+          
